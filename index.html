@@ -2,11 +2,193 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<title>Кибардин Даниил</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Вышка Сигнал — приложение для Android | Кибардин Даниил</title>
+<meta name="description" content="Вышка Сигнал — приложение для Android. Доступно в RuStore. Разработчик: Кибардин Даниил.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=Unbounded:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F2F4F3;
+    --ink: #16222B;
+    --muted: #55656F;
+    --line: #C9D2D6;
+    --signal: #C7311B;
+    --signal-dark: #A32612;
+    --on-signal: #FFFFFF;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #121A20;
+      --ink: #EEF2F3;
+      --muted: #9FB0B9;
+      --line: #2B3A44;
+      --signal: #E24A33;
+      --signal-dark: #F0634E;
+      --on-signal: #121A20;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { color-scheme: light dark; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Onest", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+
+  /* Полоса как на сигнальной мачте */
+  .mast {
+    height: 10px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--signal) 0 56px,
+      var(--paper) 56px 112px
+    );
+  }
+
+  .wrap {
+    position: relative;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Расходящиеся волны сигнала */
+  .waves {
+    position: absolute;
+    top: -150px;
+    right: -240px;
+    width: 640px;
+    height: 640px;
+    pointer-events: none;
+    color: var(--signal);
+  }
+  .waves circle {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    opacity: .22;
+  }
+  .waves circle.dot { fill: currentColor; stroke: none; opacity: .9; }
+  @media (prefers-reduced-motion: no-preference) {
+    .waves circle.ring { animation: ping 2.4s ease-out 1 both; }
+    .waves circle.r1 { animation-delay: .1s; }
+    .waves circle.r2 { animation-delay: .35s; }
+    .waves circle.r3 { animation-delay: .6s; }
+    .waves circle.r4 { animation-delay: .85s; }
+  }
+  @keyframes ping {
+    0%   { opacity: 0; }
+    30%  { opacity: .7; }
+    100% { opacity: .22; }
+  }
+
+  header.hero {
+    position: relative;
+    padding: 96px 0 80px;
+  }
+  .hero h1 {
+    position: relative;
+    margin: 0 0 20px;
+    font-family: "Unbounded", "Onest", system-ui, sans-serif;
+    font-weight: 600;
+    font-size: clamp(38px, 9vw, 76px);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+  }
+  .hero p.lead {
+    position: relative;
+    max-width: 30em;
+    margin: 0 0 36px;
+    font-size: 21px;
+    color: var(--muted);
+  }
+
+  .button {
+    position: relative;
+    display: inline-block;
+    padding: 15px 28px;
+    background: var(--signal);
+    color: var(--on-signal);
+    font-weight: 600;
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background .15s ease;
+  }
+  .button:hover { background: var(--signal-dark); }
+  .button:focus-visible,
+  a:focus-visible {
+    outline: 3px solid var(--ink);
+    outline-offset: 3px;
+  }
+
+  main section {
+    padding: 40px 0;
+    border-top: 1px solid var(--line);
+  }
+  main h2 {
+    margin: 0 0 14px;
+    font-family: "Unbounded", "Onest", system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+  }
+  main p { margin: 0 0 8px; max-width: 34em; }
+  main a { color: var(--signal); text-underline-offset: 3px; }
+  main a:hover { color: var(--signal-dark); }
+  .name { font-weight: 600; }
+
+  footer {
+    padding: 32px 0 48px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  @media (max-width: 560px) {
+    body { font-size: 17px; }
+    header.hero { padding: 64px 0 56px; }
+    .hero p.lead { font-size: 19px; }
+    .waves { right: -330px; top: -170px; }
+  }
+</style>
 </head>
 <body>
-<h1>Кибардин Даниил</h1>
-<p>Приложение: <a href="https://www.rustore.ru/catalog/app/ru.vext.vyshkasignal">Вышка Сигнал в RuStore</a></p>
-<p>Контакты: kibardindanil727@gmail.com</p>
+  <div class="mast" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <svg class="waves" viewBox="0 0 640 640" aria-hidden="true">
+      <circle class="ring r4" cx="320" cy="320" r="300"/>
+      <circle class="ring r3" cx="320" cy="320" r="225"/>
+      <circle class="ring r2" cx="320" cy="320" r="150"/>
+      <circle class="ring r1" cx="320" cy="320" r="80"/>
+      <circle class="dot" cx="320" cy="320" r="10"/>
+    </svg>
+
+    <header class="hero">
+      <h1>Вышка Сигнал</h1>
+      <p class="lead">Приложение для Android. Скачать можно в магазине RuStore.</p>
+      <a class="button" href="https://www.rustore.ru/catalog/app/ru.vext.vyshkasignal">Скачать в RuStore</a>
+    </header>
+
+    <main>
+      <section>
+        <h2>Разработчик</h2>
+        <p class="name">Кибардин Даниил</p>
+        <p>Почта для связи: <a href="mailto:kibardindanil727@gmail.com">kibardindanil727@gmail.com</a></p>
+      </section>
+    </main>
+
+    <footer>
+      © 2026 Кибардин Даниил
+    </footer>
+  </div>
 </body>
 </html>
